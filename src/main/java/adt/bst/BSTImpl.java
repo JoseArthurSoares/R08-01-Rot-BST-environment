@@ -19,8 +19,12 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 
 	@Override
 	public int height() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		return recursive_height(this.root);
+	}
+
+	private int recursive_height(BSTNode<T> node) {
+		if (node.isEmpty()) return -1;
+		else return 1 + Math.max(recursive_height((BSTNode<T>) node.getLeft()), recursive_height((BSTNode<T>) node.getRight()));
 	}
 
 	@Override
@@ -126,8 +130,13 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 
 	@Override
 	public void remove(T element) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		if (element != null) {
+			recusive_remove(this.root, element);
+		}
+	}
+
+	private void recusive_remove(BSTNode<T> root, T element) {
+
 	}
 
 	@Override
