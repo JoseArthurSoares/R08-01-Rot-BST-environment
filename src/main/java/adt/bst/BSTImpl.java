@@ -112,9 +112,22 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 	public BSTNode<T> sucessor(T element) {
 		if (element == null) return null;
 		else {
-			BSTNode<T> sucessor = (BSTNode<T>) search(element).getRight();
-			if (!sucessor.isEmpty()) return sucessor;
-			else return null;
+			BSTNode<T> node = search(element);
+			if (!node.getRight().isEmpty()){
+				//Cálculo do mínimo
+				BSTNode<T> minimo = (BSTNode<T>) node.getRight();
+				while (!minimo.getLeft().isEmpty()){
+					minimo = (BSTNode<T>) minimo.getLeft();
+				}
+				return minimo;
+			}
+			else {
+				BSTNode<T> nodeAux = (BSTNode<T>) node.getParent();
+				while (!nodeAux.isEmpty() && nodeAux.getData().compareTo(node.getData()) < 0){
+					nodeAux = (BSTNode<T>) nodeAux.getParent();
+				}
+				return nodeAux;
+			}
 		}
 	}
 
@@ -128,21 +141,42 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 		}
 	}
 
+
+	private boolean hasOneChild(BSTNode<T> node){
+		return !node.getRight().isEmpty() ^ !node.getLeft().isEmpty();
+	}
 	@Override
 	public void remove(T element) {
 		if (element != null) {
-			recusive_remove(this.root, element);
+			BSTNode<T> node = search(element);
+			if (!node.isEmpty()) {
+				if (node.isLeaf()) node = new BSTNode<>();
+				else if (hasOneChild(node)){
+					if (!node.equals(root)){
+
+					} else {
+
+					}
+				}
+			}
 		}
 	}
 
-	private void recusive_remove(BSTNode<T> root, T element) {
-
-	}
 
 	@Override
 	public T[] preOrder() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		return preOrder_recursive(this.root);
+	}
+
+	private T[] preOrder_recursive(BSTNode<T> node) {
+		T[] preOrder = (T[]) new Comparable[this.size()];
+		int i = 0;
+		if (!node.isEmpty()) {
+			preOrder[i++] = node.getData();
+			preOrder_recursive((BSTNode<T>) node.getLeft());
+			preOrder_recursive((BSTNode<T>) node.getRight());
+		}
+		return preOrder;
 	}
 
 	@Override
