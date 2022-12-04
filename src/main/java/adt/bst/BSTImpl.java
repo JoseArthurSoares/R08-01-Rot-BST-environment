@@ -133,11 +133,24 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 
 	@Override
 	public BSTNode<T> predecessor(T element) {
-		if (element == null) return null;
+		if (element == null || element.compareTo(minimum().getData()) == 0) return null;
 		else {
-			BSTNode<T> antecessor = (BSTNode<T>) search(element).getParent();
-			if (!antecessor.isEmpty()) return antecessor;
-			else return null;
+			BSTNode<T> node = search(element);
+			if (!node.getLeft().isEmpty()){
+				//Cálculo do máximo
+				BSTNode<T> maximo = (BSTNode<T>) node.getLeft();
+				while (!maximo.getRight().isEmpty()){
+					maximo = (BSTNode<T>) maximo.getRight();
+				}
+				return maximo;
+			}
+			else {
+				BSTNode<T> nodeAux = (BSTNode<T>) node.getParent();
+				while (!nodeAux.isEmpty() && nodeAux.getData().compareTo(node.getData()) > 0){
+					nodeAux = (BSTNode<T>) nodeAux.getParent();
+				}
+				return nodeAux;
+			}
 		}
 	}
 
