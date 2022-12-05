@@ -257,17 +257,33 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 
 	private LinkedList<T> order_recursive(BSTNode<T> node, LinkedList<T> array) {
 		if (!node.isEmpty()) {
-			preOrder_recursive((BSTNode<T>) node.getLeft(), array);
+			order_recursive((BSTNode<T>) node.getLeft(), array);
 			array.add(node.getData());
-			preOrder_recursive((BSTNode<T>) node.getRight(), array);
+			order_recursive((BSTNode<T>) node.getRight(), array);
 		}
 		return array;
 	}
 
 	@Override
 	public T[] postOrder() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		if (isEmpty()) return (T[]) new Comparable[0];
+		LinkedList<T> array = new LinkedList<T>();
+		LinkedList<T> postOrder = postOrder_recursive(this.root, array);
+		T[] postOrderT = (T[]) new Comparable[postOrder.size()];
+		int i = 0;
+		for (T element:postOrder){
+			postOrderT[i++] = element;
+		}
+		return postOrderT;
+	}
+
+	private LinkedList<T> postOrder_recursive(BSTNode<T> node, LinkedList<T> array) {
+		if (!node.isEmpty()) {
+			postOrder_recursive((BSTNode<T>) node.getLeft(), array);
+			postOrder_recursive((BSTNode<T>) node.getRight(), array);
+			array.add(node.getData());
+		}
+		return array;
 	}
 
 	/**
