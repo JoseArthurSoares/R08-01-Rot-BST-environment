@@ -118,44 +118,46 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 		if (element == null) return null;
 		else {
 			BSTNode<T> node = search(element);
-			if (!node.getRight().isEmpty()){
-				//Cálculo do mínimo
-				BSTNode<T> minimo = (BSTNode<T>) node.getRight();
-				while (!minimo.getLeft().isEmpty()){
-					minimo = (BSTNode<T>) minimo.getLeft();
+			if (!node.isEmpty()){
+				if (!node.getRight().isEmpty()) {
+					//Cálculo do mínimo
+					BSTNode<T> minimo = (BSTNode<T>) node.getRight();
+					while (!minimo.getLeft().isEmpty()) {
+						minimo = (BSTNode<T>) minimo.getLeft();
+					}
+					return minimo;
+				} else {
+					BSTNode<T> nodeAux = (BSTNode<T>) node.getParent();
+					while (!nodeAux.isEmpty() && nodeAux.getData().compareTo(node.getData()) < 0) {
+						nodeAux = (BSTNode<T>) nodeAux.getParent();
+					}
+					return nodeAux;
 				}
-				return minimo;
-			}
-			else {
-				BSTNode<T> nodeAux = (BSTNode<T>) node.getParent();
-				while (!nodeAux.isEmpty() && nodeAux.getData().compareTo(node.getData()) < 0){
-					nodeAux = (BSTNode<T>) nodeAux.getParent();
-				}
-				return nodeAux;
-			}
+			} else return null;
 		}
 	}
 
 	@Override
 	public BSTNode<T> predecessor(T element) {
-		if (element == null || element.compareTo(minimum().getData()) == 0) return null;
+		if (element == null /*|| element.compareTo(minimum().getData()) == 0*/) return null;
 		else {
 			BSTNode<T> node = search(element);
-			if (!node.getLeft().isEmpty()){
-				//Cálculo do máximo
-				BSTNode<T> maximo = (BSTNode<T>) node.getLeft();
-				while (!maximo.getRight().isEmpty()){
-					maximo = (BSTNode<T>) maximo.getRight();
+			if (!node.isEmpty()) {
+				if (!node.getLeft().isEmpty()) {
+					//Cálculo do máximo
+					BSTNode<T> maximo = (BSTNode<T>) node.getLeft();
+					while (!maximo.getRight().isEmpty()) {
+						maximo = (BSTNode<T>) maximo.getRight();
+					}
+					return maximo;
+				} else {
+					BSTNode<T> nodeAux = (BSTNode<T>) node.getParent();
+					while (!nodeAux.isEmpty() && nodeAux.getData().compareTo(node.getData()) > 0) {
+						nodeAux = (BSTNode<T>) nodeAux.getParent();
+					}
+					return nodeAux;
 				}
-				return maximo;
-			}
-			else {
-				BSTNode<T> nodeAux = (BSTNode<T>) node.getParent();
-				while (!nodeAux.isEmpty() && nodeAux.getData().compareTo(node.getData()) > 0){
-					nodeAux = (BSTNode<T>) nodeAux.getParent();
-				}
-				return nodeAux;
-			}
+			} else return null;
 		}
 	}
 
@@ -211,9 +213,9 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 					}
 				//Caso o nó tenha dois filhos
 				} else {
-					BSTNode<T> sucessor = this.sucessor(element);
-					node.setData(sucessor.getData());
+					BSTNode<T> sucessor = this.sucessor(node.getData());
 					remove(sucessor.getData());
+					node.setData(sucessor.getData());
 				}
 			}
 		}
