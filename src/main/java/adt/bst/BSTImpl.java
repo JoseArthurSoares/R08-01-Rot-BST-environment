@@ -244,8 +244,24 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 
 	@Override
 	public T[] order() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not implemented yet!");
+		if (isEmpty()) return (T[]) new Comparable[0];
+		LinkedList<T> array = new LinkedList<T>();
+		LinkedList<T> order = order_recursive(this.root, array);
+		T[] orderT = (T[]) new Comparable[order.size()];
+		int i = 0;
+		for (T element:order){
+			orderT[i++] = element;
+		}
+		return orderT;
+	}
+
+	private LinkedList<T> order_recursive(BSTNode<T> node, LinkedList<T> array) {
+		if (!node.isEmpty()) {
+			preOrder_recursive((BSTNode<T>) node.getLeft(), array);
+			array.add(node.getData());
+			preOrder_recursive((BSTNode<T>) node.getRight(), array);
+		}
+		return array;
 	}
 
 	@Override
