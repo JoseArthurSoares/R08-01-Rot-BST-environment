@@ -222,17 +222,24 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 
 	@Override
 	public T[] preOrder() {
+		if (isEmpty()) return (T[]) new Comparable[0];
 		LinkedList<T> array = new LinkedList<T>();
-		return preOrder_recursive(this.root, array);
+		LinkedList<T> preOrder = preOrder_recursive(this.root, array);
+		T[] preOrderT = (T[]) new Comparable[preOrder.size()];
+		int i = 0;
+		for (T element:preOrder){
+			preOrderT[i++] = element;
+		}
+		return preOrderT;
 	}
 
-	private T[] preOrder_recursive(BSTNode<T> node, LinkedList<T> array) {
+	private LinkedList<T> preOrder_recursive(BSTNode<T> node, LinkedList<T> array) {
 		if (!node.isEmpty()) {
 			array.add(node.getData());
 			preOrder_recursive((BSTNode<T>) node.getLeft(), array);
 			preOrder_recursive((BSTNode<T>) node.getRight(), array);
 		}
-		return (T[]) array.toArray();
+		return array;
 	}
 
 	@Override
