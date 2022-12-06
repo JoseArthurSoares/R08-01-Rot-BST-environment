@@ -1,5 +1,7 @@
 package adt.bt;
 
+import adt.bst.BSTNode;
+
 /**
  * The node of a binary tree. Its internal data has type T, which does not need
  * to be comparable.
@@ -83,4 +85,6 @@ public class BTNode<T> {
 	public void setParent(BTNode<T> parent) {
 		this.parent = parent;
 	}
+
+
 }

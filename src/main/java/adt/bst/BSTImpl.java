@@ -112,7 +112,12 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 			return minimo;
 		}else return null;
 	}
-
+	public boolean hasOnlyLeftChild(BSTNode<T> node){
+		return node.getRight().isEmpty() && !node.getLeft().isEmpty();
+	}
+	public boolean hasOnlyRightChild(BSTNode<T> node){
+		return !node.getRight().isEmpty() && node.getLeft().isEmpty();
+	}
 	@Override
 	public BSTNode<T> sucessor(T element) {
 		if (element == null) return null;
@@ -162,12 +167,6 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 	}
 
 
-	private boolean hasOnlyLeftChild(BSTNode<T> node){
-		return node.getRight().isEmpty() && !node.getLeft().isEmpty();
-	}
-	private boolean hasOnlyRightChild(BSTNode<T> node){
-		return !node.getRight().isEmpty() && node.getLeft().isEmpty();
-	}
 
 	@Override
 	public void remove(T element) {

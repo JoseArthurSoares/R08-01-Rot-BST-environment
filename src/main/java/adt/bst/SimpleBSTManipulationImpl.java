@@ -27,9 +27,34 @@ public class SimpleBSTManipulationImpl<T extends Comparable<T>> implements Simpl
 
 	@Override
 	public boolean isSimilar(BST<T> tree1, BST<T> tree2) {
-		// TODO Implement this method
-		throw new UnsupportedOperationException("Not implemented yet!");
+		if (tree1.size() != tree2.size()) return false;
+		else if (tree1.isEmpty() && tree2.isEmpty()) return true;
+		else return checkSimilarity(tree1.getRoot(), tree2.getRoot());
 	}
+
+	private boolean checkSimilarity(BTNode<T> node1, BTNode<T> node2) {
+		//Caso seja um nó folha
+		if(node1.isLeaf() && node2.isLeaf()) return true;
+		//Caso tenha apenas um filho a esquerda
+		else if (hasOnlyLeftChild((BSTNode<T>) node1) && hasOnlyLeftChild((BSTNode<T>) node2)) {
+			return checkSimilarity(node1.getLeft(), node2.getLeft());
+		//Caso tenha apenas um filho a direita
+		} else if (hasOnlyRightChild((BSTNode<T>) node1) && hasOnlyRightChild((BSTNode<T>) node2)) {
+			return checkSimilarity(node1.getRight(), node2.getRight());
+		//Caso tenha dois filhos
+		} else if (hasTwoChildren((BSTNode<T>) node1) && hasTwoChildren((BSTNode<T>) node2)) {
+			return checkSimilarity(node1.getLeft(), node2.getLeft()) && checkSimilarity(node1.getRight(), node2.getRight());
+		//Caso seja diferente
+		} else return false;
+	}
+
+	public boolean hasOnlyLeftChild(BSTNode<T> node){
+		return node.getRight().isEmpty() && !node.getLeft().isEmpty();
+	}
+	public boolean hasOnlyRightChild(BSTNode<T> node){
+		return !node.getRight().isEmpty() && node.getLeft().isEmpty();
+	}
+	public boolean hasTwoChildren(BSTNode<T> node){return !node.getRight().isEmpty() && !node.getLeft().isEmpty();}
 
 	@Override
 	public T orderStatistic(BST<T> tree, int k) {
