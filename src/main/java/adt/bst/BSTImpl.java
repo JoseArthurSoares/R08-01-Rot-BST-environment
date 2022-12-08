@@ -117,7 +117,7 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 	}
 	@Override
 	public BSTNode<T> sucessor(T element) {
-		if (element == null) return null;
+		if (isEmpty() || element == null || element.compareTo(maximum().getData()) >= 0 ) return null;
 		else {
 			BSTNode<T> node = search(element);
 			if (!node.isEmpty()){
@@ -141,7 +141,7 @@ public class BSTImpl<T extends Comparable<T>> implements BST<T> {
 
 	@Override
 	public BSTNode<T> predecessor(T element) {
-		if (element == null /*|| element.compareTo(minimum().getData()) == 0*/) return null;
+		if (isEmpty() || element == null || element.compareTo(minimum().getData()) <= 0) return null;
 		else {
 			BSTNode<T> node = search(element);
 			if (!node.isEmpty()) {
