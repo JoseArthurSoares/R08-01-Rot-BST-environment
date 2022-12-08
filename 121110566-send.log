@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2022-12-07T14:25:41.130-0300</date>
+  <logger>JOSE ARTHUR SOARES BEZERRA</logger>
+  <level>FINE</level>
+  <message>File 121110566-JOSE ARTHUR SOARES BEZERRA.zip was received. It was sent by JOSE ARTHUR SOARES BEZERRA from IP 192.168.56.1 at 07-12-2022 14*25*41</message>
+</record>

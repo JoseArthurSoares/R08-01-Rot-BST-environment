@@ -5,24 +5,58 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import adt.bst.BSTImpl;
 import adt.bt.BTNode;
 
 public class StudentBSTTest {
 
 	private BSTImpl<Integer> tree;
+	private BSTImpl<Integer> tree2;
+	private BSTImpl<Integer> tree3;
+	private BSTImpl<Integer> tree4;
+	private BSTImpl<Integer> tree5;
+	private SimpleBSTManipulationImpl<Integer> manip = new SimpleBSTManipulationImpl<>();
 	private BTNode<Integer> NIL = new BTNode<Integer>();
+
+	public StudentBSTTest() {
+	}
 
 	private void fillTree() {
 		Integer[] array = { 6, 23, -34, 5, 9, 2, 0, 76, 12, 67, 232, -40 };
 		for (int i : array) {
 			tree.insert(i);
 		}
+
+		tree2.insert(2);
+		tree2.insert(3);
+		tree2.insert(0);
+		tree2.insert(10);
+		tree2.insert(100);
+		tree3.insert(2);
+		tree3.insert(3);
+		tree3.insert(0);
+		tree3.insert(10);
+		tree3.insert(100);
+		tree4.insert(2);
+		tree4.insert(3);
+		tree4.insert(0);
+		tree4.insert(10);
+		tree4.insert(99);
+		tree5.insert(2);
+		tree5.insert(3);
+		tree5.insert(0);
+		tree5.insert(10);
+		tree5.insert(99);
+		tree5.insert(100);
 	}
 
 	@Before
 	public void setUp() {
+
 		tree = new BSTImpl<>();
+		tree2 = new BSTImpl<>();
+		tree3 = new BSTImpl<>();
+		tree4 = new BSTImpl<>();
+		tree5 = new BSTImpl<>();
 	}
 
 	@Test
@@ -151,5 +185,39 @@ public class StudentBSTTest {
 		assertEquals(new Integer(-40), tree.search(-40).getData());
 		assertEquals(new Integer(-34), tree.search(-34).getData());
 		assertEquals(NIL, tree.search(2534));
+	}
+
+	@Test
+	public void testEquals(){
+		fillTree();
+		//assertEquals(true, manip.equals(tree,tree));
+		//assertEquals(false, manip.equals(tree2,tree4));
+		//assertEquals(true, manip.equals(tree3,tree2));
+		assertEquals(false, manip.equals(tree4,tree5));
+	}
+
+	@Test
+	public void testSimilarity(){
+		fillTree();
+		assertEquals(true, manip.isSimilar(tree,tree));
+		assertEquals(true, manip.isSimilar(tree2,tree4));
+		assertEquals(false, manip.isSimilar(tree,tree2));
+	}
+
+	@Test
+	public void testOrderStatics(){
+		fillTree();
+		assertEquals(new Integer(-40), manip.orderStatistic(tree, 1));
+		assertEquals(new Integer(-34), manip.orderStatistic(tree, 2));
+		assertEquals(new Integer(0), manip.orderStatistic(tree, 3));
+		assertEquals(new Integer(2), manip.orderStatistic(tree, 4));
+		assertEquals(new Integer(5), manip.orderStatistic(tree, 5));
+		assertEquals(new Integer(6), manip.orderStatistic(tree, 6));
+		assertEquals(new Integer(9), manip.orderStatistic(tree, 7));
+		assertEquals(new Integer(12), manip.orderStatistic(tree, 8));
+		assertEquals(new Integer(23), manip.orderStatistic(tree, 9));
+		assertEquals(new Integer(67), manip.orderStatistic(tree, 10));
+		assertEquals(new Integer(76), manip.orderStatistic(tree, 11));
+		assertEquals(new Integer(232), manip.orderStatistic(tree, 12));
 	}
 }

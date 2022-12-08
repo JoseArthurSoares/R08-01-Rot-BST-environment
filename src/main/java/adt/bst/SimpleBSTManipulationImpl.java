@@ -19,10 +19,10 @@ public class SimpleBSTManipulationImpl<T extends Comparable<T>> implements Simpl
 
 	private boolean equalsNode(BTNode<T> node1, BTNode<T> node2) {
 		boolean answer = node1.equals(node2);
-		if (!node1.isEmpty() && !node2.isEmpty() && answer == true){
+		if (!node1.isEmpty() && !node2.isEmpty() && answer){
 			return this.equalsNode(node1.getLeft(), node2.getLeft()) && this.equalsNode(node1.getRight(), node2.getRight());
 		}
-		return false;
+		return answer;
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class SimpleBSTManipulationImpl<T extends Comparable<T>> implements Simpl
 	}
 
 	private T orderStastics_k(BST<T> tree, int k, T minimum) {
-		if (k < 1) return minimum;
+		if (k <= 1) return minimum;
 		else return orderStastics_k(tree, k-1, tree.sucessor(minimum).getData());
 	}
 

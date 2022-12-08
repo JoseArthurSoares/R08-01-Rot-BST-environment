@@ -1,8 +1,5 @@
 package adt.bst;
 
-import adt.bt.BTNode;
-
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class BSTImpl<T extends Comparable<T>> implements BST<T> {
