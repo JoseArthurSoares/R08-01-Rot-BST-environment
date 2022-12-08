@@ -2,6 +2,7 @@ package adt.bst;
 
 import static org.junit.Assert.*;
 
+import adt.bst.extended.FloorCeilBSTImpl;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,6 +16,7 @@ public class StudentBSTTest {
 	private BSTImpl<Integer> tree4;
 	private BSTImpl<Integer> tree5;
 	private SimpleBSTManipulationImpl<Integer> manip = new SimpleBSTManipulationImpl<>();
+	private FloorCeilBSTImpl floorCeil = new FloorCeilBSTImpl();
 	private BTNode<Integer> NIL = new BTNode<Integer>();
 
 	public StudentBSTTest() {
@@ -219,5 +221,21 @@ public class StudentBSTTest {
 		assertEquals(new Integer(67), manip.orderStatistic(tree, 10));
 		assertEquals(new Integer(76), manip.orderStatistic(tree, 11));
 		assertEquals(new Integer(232), manip.orderStatistic(tree, 12));
+	}
+
+	@Test
+	public void testFloor(){
+		assertEquals(new Integer(0), floorCeil.floor(new Integer[]{-10, -5, -1, 0, 5, 10}, 1) );
+		assertNull(floorCeil.floor(new Integer[]{-10, -5, -1, 0, 5, 10}, -11) );
+		assertEquals(new Integer(10), floorCeil.floor(new Integer[]{-10, -5, -1, 0, 5, 10}, 10) );
+		assertEquals(new Integer(10), floorCeil.floor(new Integer[]{-10, -5, -1, 0, 5, 10}, 500) );
+	}
+
+	@Test
+	public void  testCeil(){
+		assertEquals(new Integer(67), floorCeil.ceil(new Integer[]{6, 23, -34, 5, 9, 2, 0, 76, 12, 67, 232, -40}, 24) );
+		assertNull(floorCeil.ceil(new Integer[]{6, 23, -34, 5, 9, 2, 0, 76, 12, 67, 232, -40}, 400));
+		assertEquals(new Integer(-40), floorCeil.ceil(new Integer[]{6, 23, -34, 5, 9, 2, 0, 76, 12, 67, 232, -40}, -40) );
+		assertEquals(new Integer(-40), floorCeil.ceil(new Integer[]{6, 23, -34, 5, 9, 2, 0, 76, 12, 67, 232, -40}, -400) );
 	}
 }

@@ -16,26 +16,35 @@ public class FloorCeilBSTImpl extends BSTImpl<Integer> implements FloorCeilBST {
 		for (int i : array){
 			tree.insert(i);
 		}
-		return calculateFloor(tree.getRoot(), numero);
+		if (tree.minimum().getData() > numero) return null;
+		else if (tree.maximum().getData() <= numero ) return tree.maximum().getData();
+		return calculateFloor(tree, tree.minimum(), numero);
 	}
 
-	private Integer calculateFloor(BSTNode<Integer> node, double numero) {
-		if (node.isEmpty()) return null;
-		else if (node.getData() == numero) return node.getData();
-		else if (node.getData() > numero){
-			return calculateFloor((BSTNode<Integer>) node.getLeft(), numero);
-		} else {
-			if (node.getRight().getData() > numero){
-
-			}
+	private Integer calculateFloor(BSTImpl<Integer> tree, BSTNode<Integer> node, double numero) {
+		if (node.getData() == numero) return node.getData();
+		else if (node.getData() > numero) return tree.predecessor(node.getData()).getData();
+		else {
+			return calculateFloor(tree, tree.sucessor(node.getData()), numero);
 		}
-		return null;
 	}
 
 	@Override
 	public Integer ceil(Integer[] array, double numero) {
-		//TODO Implemente seu codigo aqui
-		throw new UnsupportedOperationException("Not implemented yet!");
+		BSTImpl<Integer> tree = new BSTImpl<>();
+		for (int i : array){
+			tree.insert(i);
+		}
+		if (tree.maximum().getData() < numero) return null;
+		else if (tree.minimum().getData() >= numero ) return tree.minimum().getData();
+		return calculateCeil(tree, tree.maximum(), numero);
 	}
 
+	private Integer calculateCeil(BSTImpl<Integer> tree, BSTNode<Integer> node, double numero) {
+		if (node.getData() == numero) return node.getData();
+		else if (node.getData() < numero) return tree.sucessor(node.getData()).getData();
+		else {
+			return calculateFloor(tree, tree.predecessor(node.getData()), numero);
+		}
+	}
 }
